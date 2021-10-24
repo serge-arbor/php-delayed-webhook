@@ -61,9 +61,9 @@ class GetTimerController extends AbstractController
     {
         $timer = $this->repository->findById($id);
 
-//        if (!$timer) {
-        throw $this->createNotFoundException();
-//        }
+        if (!$timer) {
+            throw $this->createNotFoundException();
+        }
 
         return $timer;
     }

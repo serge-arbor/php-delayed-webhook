@@ -4,13 +4,26 @@ declare(strict_types=1);
 
 namespace App\Timer\Saver;
 
+use App\RedisClient;
 use App\Timer\Timer;
 
 class RedisTimerSaver implements TimerSaver
 {
+    public function __construct(private RedisClient $redisClient)
+    {
+    }
+
     public function save(CreateTimerDto $dto): Timer
     {
-        // TODO: implement save to Redis
-        return new Timer(1, $dto->getCreatedAt(), $dto->getTriggerAt());
+        $id = $this->redisClient->incr('timer:id_sequence');
+        $this->redisClient->hSet(
+            'timer:' . $id,
+            [
+                'created_at' => $dto->getCreatedAt()->format(\DateTimeInterface::ATOM),
+                'trigger_at' => $dto->getTriggerAt()->format(\DateTimeInterface::ATOM),
+            ],
+        );
+
+        return new Timer($id, $dto->getCreatedAt(), $dto->getTriggerAt());
     }
 }
