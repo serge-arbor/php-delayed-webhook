@@ -6,6 +6,8 @@ namespace App\Timer\Controller\CreateTimer;
 
 use App\Timer\Handler\CreateTimerHandler;
 use App\Timer\Saver\CreateTimerDto;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +17,40 @@ use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+/**
+ * @OA\Post(
+ *     operationId="createTimer",
+ *     @OA\RequestBody(
+ *         @Model(type=CreateTimerRequestDto::class)
+ *     ),
+ *     @OA\Response(
+ *         response="201",
+ *         description="Returns the ID of the created timer",
+ *         @Model(type=CreateTimerResponseDto::class)
+ *     ),
+ *     @OA\Response(
+ *         response="400",
+ *         description="Returns bad request error",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="type", type="string"),
+ *             @OA\Property(property="title", type="string"),
+ *             @OA\Property(property="status", type="integer"),
+ *             @OA\Property(property="detail", type="string")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response="500",
+ *         description="Internal server error",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="type", type="string"),
+ *             @OA\Property(property="title", type="string"),
+ *             @OA\Property(property="status", type="integer"),
+ *             @OA\Property(property="detail", type="string")
+ *         )
+ *     )
+ * )
+ * @OA\Tag(name="timers")
+ */
 #[Route('/api/v1/timers', methods: ['POST'])]
 class CreateTimerController extends AbstractController
 {
@@ -35,7 +71,7 @@ class CreateTimerController extends AbstractController
 
         $timer = $this->handler->handle(new CreateTimerDto($createdAt, $triggerAt));
 
-        return $this->json(new CreateTimerResponseDto($timer->getId()));
+        return $this->json(new CreateTimerResponseDto($timer->getId()), 201);
     }
 
     private function deserializeRequest(Request $request): CreateTimerRequestDto

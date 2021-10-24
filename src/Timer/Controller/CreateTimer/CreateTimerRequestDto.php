@@ -4,22 +4,35 @@ declare(strict_types=1);
 
 namespace App\Timer\Controller\CreateTimer;
 
+use OpenApi\Annotations as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CreateTimerRequestDto
 {
+    /**
+     * @OA\Property(description="Hours to delay timer")
+     */
     #[Assert\NotBlank]
     #[Assert\GreaterThanOrEqual(0)]
     private int $hours;
 
+    /**
+     * @OA\Property(description="Monites to delay timer")
+     */
     #[Assert\NotBlank]
     #[Assert\GreaterThanOrEqual(0)]
     private int $minutes;
 
+    /**
+     * @OA\Property(description="Seconds to delay timer")
+     */
     #[Assert\NotBlank]
     #[Assert\GreaterThanOrEqual(0)]
     private int $seconds;
 
+    /**
+     * @OA\Property(description="URL to call after the delay")
+     */
     #[Assert\NotBlank]
     #[Assert\Url]
     private string $url;
