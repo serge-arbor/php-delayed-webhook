@@ -69,7 +69,7 @@ class CreateTimerController extends AbstractController
         $createdAt = new \DateTimeImmutable();
         $triggerAt = $createdAt->add($this->getInterval($dto));
 
-        $timer = $this->handler->handle(new CreateTimerDto($createdAt, $triggerAt));
+        $timer = $this->handler->handle(new CreateTimerDto($createdAt, $triggerAt, $dto->getUrl()));
 
         return $this->json(new CreateTimerResponseDto($timer->getId()), 201);
     }

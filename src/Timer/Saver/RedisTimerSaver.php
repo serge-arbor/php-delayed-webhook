@@ -21,9 +21,10 @@ class RedisTimerSaver implements TimerSaver
             [
                 'created_at' => $dto->getCreatedAt()->format(\DateTimeInterface::ATOM),
                 'trigger_at' => $dto->getTriggerAt()->format(\DateTimeInterface::ATOM),
+                'url' => $dto->getUrl(),
             ],
         );
 
-        return new Timer($id, $dto->getCreatedAt(), $dto->getTriggerAt());
+        return new Timer($id, $dto->getCreatedAt(), $dto->getTriggerAt(), $dto->getUrl());
     }
 }

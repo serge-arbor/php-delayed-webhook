@@ -18,12 +18,15 @@ class RedisTimerRepository implements TimerRepository
      */
     public function findById(int $id): ?Timer
     {
-        $data = $this->redisClient->hGet('timer:' . $id, ['created_at', 'trigger_at']);
+        $data = $this->redisClient->hGet('timer:' . $id, ['created_at', 'trigger_at', 'url']);
 
-        if (!$data['created_at'] || !$data['trigger_at']) {
+        if (!$data['created_at'] || !$data['trigger_at'] || !$data['url']) {
             return null;
         }
 
-        return new Timer($id, new \DateTimeImmutable($data['created_at']), new \DateTimeImmutable($data['trigger_at']));
+        $createdAt = new \DateTimeImmutable($data['created_at']);
+        $triggerAt = new \DateTimeImmutable($data['trigger_at']);
+
+        return new Timer($id, $createdAt, $triggerAt, $data['url']);
     }
 }

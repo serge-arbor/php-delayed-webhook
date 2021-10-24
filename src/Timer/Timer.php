@@ -10,6 +10,7 @@ class Timer
         private int $id,
         private \DateTimeImmutable $createdAt,
         private \DateTimeImmutable $triggerAt,
+        private string $url,
     ) {
     }
 
@@ -26,5 +27,10 @@ class Timer
     public function getTriggerAt(): \DateTimeImmutable
     {
         return $this->triggerAt;
+    }
+
+    public function getUrl(): string
+    {
+        return $this->url;
     }
 }
