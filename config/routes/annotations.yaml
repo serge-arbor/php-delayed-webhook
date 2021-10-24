@@ -1,5 +1,5 @@
 controllers:
-    resource: ../../src/Controller/
+    resource: ../../src/Timer/Controller/
     type: annotation
 
 kernel:
