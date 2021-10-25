@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Timer;
 
+use App\Tests\Functional\MockClientCallback;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\EventListener\StopWorkerOnMessageLimitListener;
@@ -19,7 +20,9 @@ class CreateTimerControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $postRequestData = ['hours' => 0, 'minutes' => 0, 'seconds' => 0, 'url' => 'https://example.com'];
+        $url = 'https://example.com';
+
+        $postRequestData = ['hours' => 0, 'minutes' => 0, 'seconds' => 0, 'url' => $url];
         $client->request('POST', '/api/v1/timers', [], [], [], json_encode($postRequestData, JSON_THROW_ON_ERROR));
 
         $this->assertResponseStatusCodeSame(201);
@@ -45,5 +48,10 @@ class CreateTimerControllerTest extends WebTestCase
 
         $worker = new Worker([$receiver], $bus, $eventDispatcher);
         $worker->run();
+
+        $mockClientCallback = $container->get(MockClientCallback::class);
+        $this->assertCount(1, $mockClientCallback->getRequests());
+        $this->assertSame('POST', $mockClientCallback->getRequests()[0]['method']);
+        $this->assertSame($url . '/' . $postResponseData['id'], $mockClientCallback->getRequests()[0]['url']);
     }
 }
