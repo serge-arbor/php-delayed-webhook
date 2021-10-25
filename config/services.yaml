@@ -13,7 +13,7 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
 
-    App\RedisClient:
+    App\Redis\PhpRedisClient:
         arguments:
             $host: '%env(REDIS_HOST)%'
             $port: '%env(REDIS_PORT)%'

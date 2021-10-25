@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Timer\Saver;
 
-use App\RedisClient;
+use App\Redis\RedisClient;
 use App\Timer\Timer;
 
 class RedisTimerSaver implements TimerSaver

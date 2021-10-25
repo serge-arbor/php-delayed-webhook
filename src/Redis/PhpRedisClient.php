@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Redis;
 
-class RedisClient
+class PhpRedisClient implements RedisClient
 {
     private \Redis $redis;
 
