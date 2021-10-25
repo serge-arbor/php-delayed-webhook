@@ -33,4 +33,4 @@ RUN set -eux; \
     composer clear-cache; \
     php bin/console cache:clear
 
-CMD [ "php", "bin/console", "messenger:consume", "async" ]
+CMD [ "php", "bin/console", "messenger:consume", "async", "-vv" ]
