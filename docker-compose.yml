@@ -6,6 +6,7 @@ services:
     environment:
       REDIS_HOST: redis
       REDIS_PORT: 6379
+      MESSENGER_TRANSPORT_DSN: redis://redis:6379/messages
     depends_on:
       - redis
 
@@ -18,10 +19,21 @@ services:
     ports:
       - 80:80
 
+  worker_app:
+    build:
+      context: .
+      dockerfile: docker/worker/app/Dockerfile
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      MESSENGER_TRANSPORT_DSN: redis://redis:6379/messages
+    depends_on:
+      - redis
+
   redis:
-      image: redis
-      volumes:
-        - redis-data:/data
+    image: redis
+    volumes:
+      - redis-data:/data
 
 volumes:
   redis-data:

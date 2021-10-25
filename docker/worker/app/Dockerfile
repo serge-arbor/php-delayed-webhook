@@ -1,15 +1,13 @@
-FROM php:fpm-alpine
+FROM php:alpine as runtime
 
 RUN set -eux; \
     apk add --no-cache icu-dev icu-libs $PHPIZE_DEPS; \
-    docker-php-ext-install -j$(nproc) intl; \
+    docker-php-ext-install -j$(nproc) intl pcntl; \
     pecl install redis; \
     pecl clear-cache; \
     apk del icu-dev $PHPIZE_DEPS; \
     docker-php-ext-enable opcache redis; \
     mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
-
-COPY docker/api/app/preload.ini /usr/local/etc/php/conf.d/
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
@@ -33,5 +31,6 @@ RUN set -eux; \
     composer dump-env prod --empty; \
     composer install --no-dev --optimize-autoloader; \
     composer clear-cache; \
-    php bin/console cache:clear; \
-    chown -R www-data:www-data .
+    php bin/console cache:clear
+
+CMD [ "php", "bin/console", "messenger:consume", "async" ]
