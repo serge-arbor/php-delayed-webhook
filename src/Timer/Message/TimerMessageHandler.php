@@ -19,6 +19,7 @@ class TimerMessageHandler implements MessageHandlerInterface
      */
     public function __invoke(TimerMessage $message): void
     {
+        // TODO: how it will decide if there need to retry?
         $this->client->request('POST', rtrim($message->getUrl(), '/') . '/' . $message->getId());
     }
 }

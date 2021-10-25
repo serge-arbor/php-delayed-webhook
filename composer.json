@@ -52,6 +52,8 @@
         "symfony/polyfill-php72": "*"
     },
     "scripts": {
+        "test":  "php bin/phpunit tests/Unit",
+        "test:functional": "docker-compose -f docker-compose.test.yaml up --build --abort-on-container-exit",
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"

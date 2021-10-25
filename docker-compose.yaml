@@ -1,10 +1,10 @@
-version: "3.7"
+version: "3.8"
 
 services:
   api_app:
     build:
       context: .
-      dockerfile: docker/api/app/Dockerfile
+      dockerfile: docker/prod/api/app/Dockerfile
     environment:
       REDIS_HOST: redis
       REDIS_PORT: 6379
@@ -15,7 +15,7 @@ services:
   api_nginx:
     build:
       context: .
-      dockerfile: docker/api/nginx/Dockerfile
+      dockerfile: docker/prod/api/nginx/Dockerfile
     depends_on:
       - api_app
     ports:
@@ -24,7 +24,7 @@ services:
   worker_app:
     build:
       context: .
-      dockerfile: docker/worker/app/Dockerfile
+      dockerfile: docker/prod/worker/app/Dockerfile
     environment:
       REDIS_HOST: redis
       REDIS_PORT: 6379
@@ -33,7 +33,7 @@ services:
       - redis
 
   redis:
-    image: redis
+    image: redis:6.2.6
     volumes:
       - redis-data:/data
 

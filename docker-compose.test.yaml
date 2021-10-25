@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+    tests:
+        build:
+            context: .
+            dockerfile: docker/test/app/Dockerfile
+        environment:
+            REDIS_HOST: redis
+            REDIS_PORT: 6379
+            MESSENGER_TRANSPORT_DSN: redis://redis:6379/messages
+        depends_on:
+            - redis
+
+    redis:
+        image: redis:6.2.6
