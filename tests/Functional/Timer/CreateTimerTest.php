@@ -11,7 +11,7 @@ use Symfony\Component\Messenger\EventListener\StopWorkerOnMessageLimitListener;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Worker;
 
-class CreateTimerControllerTest extends WebTestCase
+class CreateTimerTest extends WebTestCase
 {
     /**
      * @throws \JsonException
