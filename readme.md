@@ -57,7 +57,7 @@ To run Unit and functional tests run:
 docker-compose -f docker-compose.test.yaml up --build --abort-on-container-exit
 ```
 
-**By default, API is running at http://localhost:10080**
+**By default, API is running at http://localhost**
 
 There are two end-points:
 - `POST /api/v1/timers`

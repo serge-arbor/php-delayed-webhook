@@ -9,6 +9,8 @@ services:
       REDIS_HOST: redis
       REDIS_PORT: 6379
       MESSENGER_TRANSPORT_DSN: redis://redis:6379/messages
+    volumes:
+      - /app/public
     depends_on:
       - redis
 
@@ -18,6 +20,8 @@ services:
       dockerfile: docker/prod/api/nginx/Dockerfile
     depends_on:
       - api_app
+    volumes_from:
+      - api_app:ro
     ports:
       - 80:80
 
