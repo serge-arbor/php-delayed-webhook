@@ -23,7 +23,7 @@ services:
     volumes_from:
       - api_app:ro
     ports:
-      - 80:80
+      - 80:80 # if its busy - try another port, for example 8081:80
 
   worker_app:
     build:

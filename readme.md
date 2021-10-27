@@ -58,6 +58,17 @@ docker-compose -f docker-compose.test.yaml up --build --abort-on-container-exit
 ```
 
 **By default, API is running at http://localhost**
+If you default port is busy, you can change it in `/docker-compose.yaml` from 80:
+```console
+ports:
+  - 80:80 # http://localhost 
+```
+to 8081 (for example)
+```console
+ports:
+  - 8081:80 # http://localhost:8081/ 
+```
+
 
 There are two end-points:
 - `POST /api/v1/timers`
