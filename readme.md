@@ -17,8 +17,8 @@ Project Delayed Webhook is util that provides API for scheduling and shooting a 
 
 ## Overview
 - This is a showcase implementation. The goal is to demonstrate coding skills with Symfony API best practices, following SOLID and DRY principles
-- If that task would be a real-world task - It's no need to build so scalable code structure and to split all the logic into layers. The short-deadline solution would much smaller
-- ***You can check out my [alternative solution to this Home Assignment](https://github.com/serge-arbor/php-webhook-api) built with Node.js and TypeScript, which is more laconic and covered by e2e tests***
+- If that task would be a real-world task - It's no need to build so scalable code structure and to split all the logic into layers. The short-deadline solution would be much smaller
+- ***You can check out my [alternative solution to this Home Assignment](https://github.com/serge-arbor/node-delayed-webhook) built with Node.js and TypeScript, which is more laconic and covered by e2e tests***
 
 ## Assumptions and Design decisions
 - The application is required to be used in some local environment without any external access, therefore **the authentication is not required**
@@ -52,7 +52,7 @@ To start the whole system locally in the containerized environment run
 docker-compose up --build
 ```
 
-To run Unit and functional tests run:
+To run Unit and functional tests:
 ```console
 docker-compose -f docker-compose.test.yaml up --build --abort-on-container-exit
 ```
@@ -70,12 +70,11 @@ ports:
 ```
 
 
+## API documentation
 There are two end-points:
 - `POST /api/v1/timers`
 - `GET /api/v1/timers/:id`
 
-
-## API documentation
 * When the app is running, API documentation is accessible here: http://localhost/api/doc
 
 ![drawing](https://i.vgy.me/RV2nzh.png)
